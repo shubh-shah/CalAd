@@ -1,6 +1,6 @@
 # CalAd
 Adds all Competitive Coding contests directly to your Google Calendar
-
+Only needs permissions to view and edit Calenders
 Data about contests taken from CoderCalendar-API by nishanthvijayan : http://api.codercalendar.io/ 
 Source : https://github.com/nishanthvijayan/CoderCalendar-API
 
