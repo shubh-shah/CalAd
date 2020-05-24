@@ -1,13 +1,11 @@
 
 import javax.swing.*;
 import java.awt.*;
+import javax.swing.border.*;
 import java.awt.event.*;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.Vector;
 import com.google.api.services.calendar.Calendar;
-import java.io.File;
-import javax.swing.border.*;
 
 class CalAdgui {
     private Calendar service;
@@ -137,7 +135,7 @@ class CalAdgui {
         pushTag.setForeground(btnfg);
         pushTag.setFont(btnfont);
 
-        DefaultListModel listModel = new DefaultListModel();
+        DefaultListModel<String> listModel = new DefaultListModel<String>();
         pushTag.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 Contest.exclusionList.add(tboxTag.getText());
@@ -163,7 +161,7 @@ class CalAdgui {
 
         Contest.getPreference();
         listModel.addAll(Contest.exclusionList);
-        JList table = new JList(listModel);
+        JList<String> table = new JList<String>(listModel);
         table.setBackground(new Color(130, 130, 130));
         table.setForeground(new Color(0, 0, 0));
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -199,9 +197,9 @@ class CalAdgui {
         reset.setFont(btnfont);
         reset.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                Contest.EXCLUDE_TAG_PATH = "src/main/resources/excludeTagsDefault";
+                Contest.EXCLUDE_TAG_PATH = "user/excludeTagsDefault";
                 Contest.getPreference();
-                Contest.EXCLUDE_TAG_PATH = "src/main/resources/excludeTagsUser";
+                Contest.EXCLUDE_TAG_PATH = "user/excludeTagsUser";
                 listModel.clear();
                 listModel.addAll(Contest.exclusionList);
             }
@@ -238,7 +236,6 @@ class CalAdgui {
      * //View Contests Tab and option to select/deselect them before pushing
      * //add info on how to get calendar id 
      * //backgroung process option 
-     * //figure out location of files in build remove src/.. from all | also while logout files in build/resources not purged
      * //Make contest checking offline
      * }
      */
@@ -258,13 +255,9 @@ class CalAdgui {
         logout.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 if (logout.getText() == "Logout") {
-                    File Credentials = new File("./tokens/StoredCredential");
-                    Credentials.delete();
-                    Contest.setWorkingCalendar("");
+                    CalAd.logout();
                     service = null;
                     tboxCID.setText("");
-                    File logfile = new File("src/main/resources/logfile.txt");
-                    logfile.delete();
                     labCID.setText("Please Enter Calendar ID : ");
                     tboxCID.setEditable(true);
                     saveCID.setText("Save");

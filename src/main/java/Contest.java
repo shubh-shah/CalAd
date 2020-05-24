@@ -1,25 +1,12 @@
-import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
-import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
-import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.DateTime;
-import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.Calendar;
-import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
 import com.google.api.services.calendar.model.EventDateTime;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.util.Vector;
-import java.util.Collections;
 import java.util.List;
 import java.io.File;
 import java.util.Scanner;
@@ -32,7 +19,8 @@ import java.io.ObjectOutputStream;
 
 public class Contest {
 	private static String WORKING_CALENDAR;
-	public static String EXCLUDE_TAG_PATH = "src/main/resources/excludeTagsUser";
+	public static String EXCLUDE_TAG_PATH = "user/excludeTagsUser";
+	public static String WORKING_CALENDAR_PATH = "user/WorkingCalendar";
 	public static int maxLength = 14;
 	public static Vector<String> allPlatforms;
 	public static Vector<String> exclusionList;
@@ -68,12 +56,13 @@ public class Contest {
 			System.out.println("Please enter the Calendar ID of Working Calendar found in -> Your Google Calendar -> Settings and Sharing -> Integration : ");
 			Scanner in = new Scanner(System.in);
 			setWorkingCalendar(in.nextLine());
+			in.close();
 		}
 	}
 
 	public static String getWorkingCalendar() {
 		try {
-			Scanner sc = new Scanner(new File("src/main/resources/WorkingCalendar"));
+			Scanner sc = new Scanner(new File(WORKING_CALENDAR_PATH));
 			if (sc.hasNextLine()) {
 				WORKING_CALENDAR = sc.nextLine();
 				return WORKING_CALENDAR;
@@ -87,7 +76,7 @@ public class Contest {
 	public static void setWorkingCalendar(String Cal) {
 		try {
 			WORKING_CALENDAR = Cal;
-			BufferedWriter out = new BufferedWriter(new FileWriter("src/main/resources/WorkingCalendar"));
+			BufferedWriter out = new BufferedWriter(new FileWriter(WORKING_CALENDAR_PATH));
 			out.write(WORKING_CALENDAR);
 			out.close();
 		} catch (IOException x) {
@@ -122,7 +111,7 @@ public class Contest {
 		try {
 			FileInputStream fis = new FileInputStream(Contest.EXCLUDE_TAG_PATH);
 			ObjectInputStream ois = new ObjectInputStream(fis);
-			Contest.exclusionList = (Vector) ois.readObject();
+			Contest.exclusionList = (Vector<String>) ois.readObject();
 			ois.close();
 			fis.close();
 		} catch (IOException ioe) {
