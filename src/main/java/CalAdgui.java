@@ -322,7 +322,7 @@ class CalAdgui {
     }
 
     public static void main(String[] args) throws IOException, GeneralSecurityException {
-        CalAdgui A = new CalAdgui();
+        new CalAdgui();
     }
 }
 

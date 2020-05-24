@@ -9,6 +9,8 @@ import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.Calendar;
 
 public class ContestList extends ArrayList<Contest> {
+    private static final long serialVersionUID = 2L;
+
     public void getContests() throws Exception {
         URL API = new URL("http://api.codercalendar.io/");
         HttpURLConnection connection = (HttpURLConnection) API.openConnection();

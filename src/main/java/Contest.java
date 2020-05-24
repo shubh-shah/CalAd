@@ -37,6 +37,7 @@ public class Contest {
 		this.platform = platform;
 		this.url = url;
 		allPlatforms = new Vector<String>() {
+			private static final long serialVersionUID = 1L;
 			{
 				add("codechef");
 				add("codeforces");
