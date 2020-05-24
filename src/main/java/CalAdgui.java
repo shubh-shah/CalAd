@@ -237,6 +237,7 @@ class CalAdgui {
      * //add info on how to get calendar id 
      * //backgroung process option 
      * //Make contest checking offline
+     * //web scaper
      * }
      */
     private JPanel createLower() {
