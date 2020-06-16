@@ -9,3 +9,7 @@ bin
 
 #ignore credentials
 tokens
+
+user/WorkingCalendar
+
+user/logfile
