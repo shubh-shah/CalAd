@@ -10,6 +10,8 @@ bin
 #ignore credentials
 tokens
 
+.vscode
+
 user/WorkingCalendar
 
 user/logfile
