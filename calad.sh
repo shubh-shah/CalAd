@@ -1,2 +1,2 @@
-cd ./Codes/CalAd
+cd ~/Projects/CalAd
 gradle run
