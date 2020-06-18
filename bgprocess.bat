@@ -1,2 +1,2 @@
-cd %HOMEPATH%/Projects/CalAd
+cd %HOMEPATH%\Projects\CalAd
 gradle runBackground
