@@ -31,7 +31,6 @@ public class CalAd {
     private static final String TOKENS_DIRECTORY_PATH = "tokens";
     private static final List<String> SCOPES = Collections.singletonList(CalendarScopes.CALENDAR);
     private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
-
     // Creates an authorized Credential object.
     // param HTTP_TRANSPORT The network HTTP Transport.
     // return An authorized Credential object.
@@ -56,71 +55,70 @@ public class CalAd {
     public static Calendar connectToGoogle() throws IOException, GeneralSecurityException {
         // Build a new authorized API client service.
         Calendar service;
-        try{
-            final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-            service = new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
-                    .setApplicationName(APPLICATION_NAME).build();
-            System.out.println("Connected to Calendar");
-        }
-        catch(IOException e){
-            writeLog(0,false);
-            System.out.println(e);
-            throw e;
-        }
+        final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+        service = new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
+                .setApplicationName(APPLICATION_NAME).build();
         return service;
     }
 
-    public static int pushContests(Calendar service) throws IOException {
+    public static int pushContests(Calendar service){
         ContestList contests = new ContestList();
-        try {
+        try{
             contests.getContests();
-        } catch (Exception e) {
-            writeLog(1,false);
-            System.out.println(e);
+        }catch (Exception e){
+            writeLog(1,false,e);
             System.exit(0);
         }
         System.out.println("Got Contests");
+
         int changes=0;
         try{
             changes = contests.addMyContests(service);
-            System.out.println("Changes Made = " + changes);
-        } catch(IOException e){
-            writeLog(2,false);
-            System.out.println(e);
-            throw e;
+        }catch(IOException e){
+            writeLog(2,false,e);
+            System.exit(0);
         }
         return changes;
     }
 
-    public static void writeLog(int entryCount,boolean success) {
+    public static void writeLog(int entryCount,boolean success,Exception e) {
+        String outString = "CalAd Run";
+        String message="";
+        if(success)
+            message += "Entries Added : "+entryCount;
+        else{
+            switch (entryCount) {
+                case 0:
+                    message += "Error : Couldn't Connect to Google Calendar";
+                    break;
+                case 1:
+                    message += "Error : Cannot Find the Data";
+                    break;
+                case 2:
+                    message += "Error : Couldn't Add Contests";
+                    break;
+                default:
+                    message += "Error : Unknown";
+                    break;
+            }
+        }
+        if(!success)
+            outString+="Un";
+        
         DateFormat dateForm = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
         Date currDate = new Date();
+        outString+="Successfully at : "+dateForm.format(currDate)+" || "+message;
+        
         try {
+            System.out.println(outString);
+            if(!success)
+                System.out.println(e);
+
             BufferedWriter out = new BufferedWriter(new FileWriter("user/logfile.txt", true));
-            if(success){
-                out.write("\nCalAd Run Successfully at : "+dateForm.format(currDate)+" || Entries Added : "+entryCount); 
-            }
-            else{
-                out.write("\nCalAd Run Unsuccessfully at : "+dateForm.format(currDate)+" with error : ");
-                switch (entryCount) {
-                    case 0:
-                        System.out.println("Couldn't Connect to Google Calendar : ");
-                        out.write("Couldn't Connect to Google Calendar");
-                        break;
-                    case 1:
-                        System.out.println("Cannot Find the Data : ");
-                        out.write("Cannot Find the Data");
-                        break;
-                    case 2:
-                        System.out.println("Couldn't Add Contests : ");
-                        out.write("Couldn't Add Contests");
-                        break;
-                    default:
-                        out.write("Unknown");
-                        break;
-                }
-            }
+            out.write(outString+"\n");
             out.close();
+
+            Notification.showNotification(message,success);
         } catch (IOException ex) {
             System.out.println("Couldn't Write Logfile : " + ex);
         }
@@ -133,12 +131,18 @@ public class CalAd {
         File logfile = new File("user/logfile.txt");
         logfile.delete();
     }
-    public static void main(String... args) throws IOException, GeneralSecurityException {
-        Calendar service = connectToGoogle();
+    public static void main(String... args){
         Contest.WorkingCalendar();
         Contest.getPreference();
-        int changes = pushContests(service);
-        writeLog(changes,true);
+        int changes=0;
+        try{
+            Calendar service = connectToGoogle();
+            changes = pushContests(service);
+        }catch(Exception e){
+            writeLog(0,false,e);
+            System.exit(0);
+        }
+        writeLog(changes,true,null);
     }
 }
 

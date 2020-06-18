@@ -20,6 +20,8 @@ class CalAdgui {
 
     CalAdgui() throws IOException, GeneralSecurityException {
         JFrame frame = new JFrame("CalAd");
+        ImageIcon img= new ImageIcon("Icon.png");
+        frame.setIconImage(img.getImage());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         service = CalAd.connectToGoogle();
 
@@ -234,9 +236,7 @@ class CalAdgui {
      * //Add options for platforms 
      * //Tabs for past logs 
      * //View Contests Tab and option to select/deselect them before pushing
-     * //add info on how to get calendar id 
-     * //backgroung process option 
-     * //Make contest checking offline
+     * //add info on how to get calendar id
      * //web scaper
      * }
      */
@@ -264,14 +264,16 @@ class CalAdgui {
                     saveCID.setText("Save");
                     logout.setText("Login");
                     cnfrm.setText("Logged Out");
-                } else {
-                    try {
+                }
+                else {
+                    try{
                         service = CalAd.connectToGoogle();
-                    } catch (Exception e) {
-                        System.exit(0);
+                        logout.setText("Logout");
+                        cnfrm.setText("Logged In");
+                    }catch (Exception e) {
+                        CalAd.writeLog(0,false,e);
+                        cnfrm.setText("Could't log into Google");
                     }
-                    logout.setText("Logout");
-                    cnfrm.setText("Logged In");
                 }
             }
         });
@@ -288,14 +290,10 @@ class CalAdgui {
         push.setFont(btnfont);
         push.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                try {
-                    cnfrm.setText("...");
-                    int changes = CalAd.pushContests(service);
-                    CalAd.writeLog(changes,true);
-                    cnfrm.setText("Contests Successfully Pushed to Calendar | Changes Made = " + changes);
-                } catch (IOException ioe) {
-                    cnfrm.setText("Contests were not Pushed to Calendar");
-                }
+                cnfrm.setText("...");
+                int changes = CalAd.pushContests(service);
+                CalAd.writeLog(changes,true,null);
+                cnfrm.setText("Contests Successfully Pushed to Calendar | Changes Made = " + changes);
             }
         });
         c.fill = GridBagConstraints.HORIZONTAL;

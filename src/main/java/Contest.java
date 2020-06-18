@@ -16,8 +16,10 @@ import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
-public class Contest {
+public class Contest implements Serializable{
+    private static final long serialVersionUID = 2L;
 	private static String WORKING_CALENDAR;
 	public static String EXCLUDE_TAG_PATH = "user/excludeTagsUser";
 	public static String WORKING_CALENDAR_PATH = "user/WorkingCalendar";
@@ -49,6 +51,22 @@ public class Contest {
 				//add("kaggle");
 			}
 		};
+	}
+	@Override
+	public boolean equals(Object o) {
+        if (o == this) { 
+            return true; 
+        } 
+        if (!(o instanceof Contest)) { 
+            return false; 
+        }
+		Contest c = (Contest) o;
+		return this.name.equals(c.name) && this.platform.equals(c.platform) && this.url.equals(c.url) && this.startTime.equals(c.startTime) && this.endTime.equals(c.endTime);
+	} 
+	
+	@Override
+	public int hashCode() {
+    	return (int)name.hashCode() * url.hashCode() * platform.hashCode();
 	}
 
 	public static void WorkingCalendar() {
