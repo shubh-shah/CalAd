@@ -1,8 +1,7 @@
 # CalAd
 
 Adds all Competitive Coding contests directly to your Google Calendar
-
-Only needs permissions to view and edit Calenders
+Needs permissions to view and edit Calenders
 
 Command Line application can be run by bgprocess.bat(Windows)/bgprocess.sh(Linux) which can be added to Task Scheduler/cron  
 or  
@@ -12,7 +11,7 @@ GUI application (For options to customise or logout) can be run by calad.bat(Win
 or  
 from the project directory: >gradle run
 
-Requirements:
+Requirements:    
 JDK    
 Gradle    
 
