@@ -13,8 +13,8 @@ or
 from the project directory: >gradle run
 
 Requirements:
-JDK 
-Gradle
+JDK    
+Gradle    
 
 Check user/logfile.txt to view any errors in case of an unexpected crash or run the commandline app for more details on the exceptions 
 
