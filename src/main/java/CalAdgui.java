@@ -13,14 +13,14 @@ class CalAdgui {
     private Color btncolor = new Color(60, 60, 60);
     private Color btnfg = Color.WHITE;
     private Color bg = new Color(40, 40, 40);
-    private Font btnfont = new Font("Century Gothic", Font.PLAIN, 13);
+    private Font btnfont = new Font("Segoe UI", Font.BOLD, 13);
+    public ImageIcon img= new ImageIcon("Icon.png");
     JLabel labCID;
     JTextField tboxCID;
     JButton saveCID;
 
     CalAdgui() throws IOException, GeneralSecurityException {
         JFrame frame = new JFrame("CalAd");
-        ImageIcon img= new ImageIcon("Icon.png");
         frame.setIconImage(img.getImage());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         service = CalAd.connectToGoogle();
@@ -46,9 +46,9 @@ class CalAdgui {
     }
 
     private JPanel createUpper() {
-        JLabel caladlabel = new JLabel(" CalAd");
-        caladlabel.setFont(new Font("Century Gothic", Font.BOLD, 48));
-        caladlabel.setForeground(new Color(255, 255, 255));
+        JLabel caladlabel = new JLabel(" CalAd",img,JLabel.CENTER);
+        caladlabel.setFont(new Font("Segoe UI", Font.BOLD, 48));
+        caladlabel.setForeground(new Color(20, 120, 220));
 
         JPanel pane = new JPanel();
         pane.setBackground(new Color(30, 30, 30));
