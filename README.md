@@ -11,8 +11,8 @@ or
 from the project directory: >gradle run
 
 Requirements:    
-JDK    
-Gradle    
+JDK 11    
+Gradle 6.5    
 Needs permissions to view and edit Calenders    
 
 Check user/logfile.txt to view any errors in case of an unexpected crash or run the commandline app for more details on the exceptions 

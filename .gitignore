@@ -12,6 +12,8 @@ tokens
 
 .vscode
 
+.settings
+
 user/WorkingCalendar
 
 user/logfile.txt
