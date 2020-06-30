@@ -1,2 +1,2 @@
-cd ~/Projects/CalAd
+cd /mnt/Storage/Projects/CalAd
 gradle runBackground
