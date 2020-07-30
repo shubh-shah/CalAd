@@ -13,7 +13,7 @@ class CalAdgui {
     private Color btncolor = new Color(60, 60, 60);
     private Color btnfg = Color.WHITE;
     private Color bg = new Color(40, 40, 40);
-    private Font btnfont = new Font("DejaVu Sans Mono", Font.BOLD, 13);
+    private Font btnfont = new Font("Fira Sans Book", Font.BOLD, 13);
     public ImageIcon img= new ImageIcon("Icon.png");
     JLabel labCID;
     JTextField tboxCID;
@@ -47,7 +47,7 @@ class CalAdgui {
 
     private JPanel createUpper() {
         JLabel caladlabel = new JLabel(" CalAd",img,JLabel.CENTER);
-        caladlabel.setFont(new Font("DejaVu Sans Mono", Font.BOLD, 48));
+        caladlabel.setFont(new Font("Fira Sans Book", Font.BOLD, 48));
         caladlabel.setForeground(new Color(20, 120, 220));
 
         JPanel pane = new JPanel();
