@@ -70,15 +70,15 @@ class CalAdgui {
         labCID.setFont(btnfont);
 
         tboxCID = new JTextField(WorkingCalendar, 30);
-        tboxCID.setSize(300, 70);
+        tboxCID.setSize(300, 30);
         tboxCID.setMinimumSize(tboxCID.getSize());
-        tboxCID.setSize(1000, 80);
+        tboxCID.setSize(1000, 50);
         tboxCID.setMaximumSize(tboxCID.getSize());
 
         saveCID = new JButton("Save");
-        tboxCID.setSize(80, 70);
-        tboxCID.setMinimumSize(tboxCID.getSize());
-        saveCID.setSize(1000, 80);
+        saveCID.setSize(80, 30);
+        saveCID.setMinimumSize(tboxCID.getSize());
+        saveCID.setSize(1000, 50);
         saveCID.setMaximumSize(saveCID.getSize());
         saveCID.setBackground(btncolor);
         saveCID.setBorder(btnborder);
